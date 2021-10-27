@@ -1,5 +1,6 @@
 package com.example.felipersumiya.desafio_nexti.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import com.example.felipersumiya.desafio_nexti.domain.Pedido;
 import com.example.felipersumiya.desafio_nexti.domain.Produto;
 import com.example.felipersumiya.desafio_nexti.repositories.ClienteRepository;
 import com.example.felipersumiya.desafio_nexti.repositories.PedidoRepository;
+import com.example.felipersumiya.desafio_nexti.repositories.ProdutoRepository;
 
 
 @Service
@@ -21,6 +23,9 @@ public class PedidoService {
 	
 	@Autowired
 	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private ProdutoRepository produtoRepository;
 	
 
 	public List<Pedido> listarPedidos(){
@@ -153,6 +158,95 @@ public class PedidoService {
 		 */
 		
 	}
+	//Insere o produto em Pedido.
+	public void insereProdutoPedido(Long id, Produto produto) {
+		
+		try {
+			
+			List<Produto> listBD = new ArrayList<>();
+			Pedido pedidoBd = pedidoRepository.getById(id);
+			Produto produtoObj = produtoRepository.getById(produto.getId());
+			
+			//obtém a lista de produtos daquele pedido
+			listBD = pedidoBd.getProdutos();
+			
+			if(listBD.contains(produtoObj) == false) {
+				
+				pedidoBd.getProdutos().add(produtoObj);
+				produtoObj.getPedidos().add(pedidoBd);
+				pedidoRepository.save(pedidoBd);
+				produtoRepository.save(produto);
+			}
+			
+				
+		}catch(RuntimeException e) {
+			
+			e.printStackTrace();
+		}
+				
+	}
 	
-
+	//Remove o produto do Pedido
+	public void removeProdutoPedido(Long id, Produto produto) {
+		
+		try {
+			
+			System.out.println("Entrou no remove produto");
+			List<Produto> listBD = new ArrayList<>();
+			List<Pedido> listP = new ArrayList<>();
+			
+			Pedido pedidoBd = pedidoRepository.getById(id);
+			Produto produtoObj = produtoRepository.getById(produto.getId());
+			
+			
+			System.out.println("Produto:" + produtoObj.getNome() + produtoObj.getId());
+			//obtém a lista de produtos daquele pedido
+			listBD = pedidoBd.getProdutos();
+			listP = produtoObj.getPedidos();
+			//producersProcedureActive.removeIf(producer -> producer.getPod().equals(pod));
+			
+			listBD.removeIf(x -> x.getId().equals(produtoObj.getId()));
+			listP.removeIf(x -> x.getId().equals(pedidoBd.getId()));
+			
+			pedidoRepository.save(pedidoBd);
+			produtoRepository.save(produto);
+			
+			/*for(Produto x : listBD) {
+				
+				System.out.println("Itens da listaBD");
+				System.out.println("Produto:" + x.getNome() + x.getId());
+			}
+			
+			if(listBD.contains(produtoObj) == false) {
+				
+				System.out.println("Entrou no if, contem o produto");
+				pedidoBd.getProdutos().remove(produtoObj);
+				produtoObj.getPedidos().remove(pedidoBd);
+				
+				//pedidoBd.getProdutos().clear();
+				//produtoObj.getPedidos().clear();
+				for(Produto x : pedidoBd.getProdutos()) {
+					
+					System.out.println("Itens da pedidosBD após método remove");
+					System.out.println("Produtos:" + x.getNome() + x.getId());
+				}
+				
+				for(Pedido x : produtoObj.getPedidos()) {
+					
+					System.out.println("Itens da produtoOBJ após método remove");
+					System.out.println("Pedidos:" + x.getId());
+				
+				
+				pedidoRepository.save(pedidoBd);
+				produtoRepository.save(produto);
+			}*/
+			
+				
+		}catch(RuntimeException e) {
+			
+			e.printStackTrace();
+		}
+				
+	}
+	
 }

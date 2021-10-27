@@ -17,6 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.felipersumiya.desafio_nexti.domain.Cliente;
 import com.example.felipersumiya.desafio_nexti.domain.Pedido;
+import com.example.felipersumiya.desafio_nexti.domain.Produto;
 import com.example.felipersumiya.desafio_nexti.services.ClienteService;
 import com.example.felipersumiya.desafio_nexti.services.PedidoService;
 
@@ -79,8 +80,7 @@ public class PedidoController {
 				return ResponseEntity.noContent().build();
 			}
 			
-			//Verificar outros métodos.
-			
+			/* Gerenciamento de Clientes em Pedidos**********************************************/
 			
 			//Vincular Cliente ao Pedido
 			
@@ -89,7 +89,8 @@ public class PedidoController {
 				
 				pedidoService.inserirClientePedido(id, cliente);
 				Pedido pedido = pedidoService.listarPorId(id);
-				return ResponseEntity.ok().body(pedido);
+				
+				return ResponseEntity.ok().build();
 
 			}
 			
@@ -99,38 +100,32 @@ public class PedidoController {
 				
 				pedidoService.removeClientePedido(id, cliente);
 				Pedido pedido = pedidoService.listarPorId(id);
-				return ResponseEntity.ok().body(pedido);
+				return ResponseEntity.ok().build();
 
 			}
 			
 			
+			/* Gerenciamento de Produtos em Pedidos**********************************************/
 			
-			
-			/*
-			 * 
-			 * 
-			 * 
-			 * 
-			 * 
-			 * @PutMapping (value = "/{id}")
-	public ResponseEntity<UsuarioDto> insereComicUser (@PathVariable Long id, @RequestBody ComicsDto comicDto){
-	
-		Comics comic = comicsService.converteDto(comicDto);
-		Usuario  usuario  = new Usuario();
-		usuarioComicsService.inserirComicUsuario(id, comic);
-		usuario = usuarioService.findById(id);
-		return ResponseEntity.ok().body(new UsuarioDto(usuario));
+			@PutMapping ("/produtoI/{id}")
+			public ResponseEntity<Pedido> insereProdutoPedido (@PathVariable Long id, @RequestBody Produto produto){
+				
+				pedidoService.insereProdutoPedido(id, produto);
+				Pedido pedido = pedidoService.listarPorId(id);
+				return ResponseEntity.ok().build();
 
-	}
-	
-			 */
+			}
 			
-			//Remover Clientes de Pedidos
+			@PutMapping ("/produtoR/{id}")
+			public ResponseEntity<Pedido> removeProdutoPedido (@PathVariable Long id, @RequestBody Produto produto){
+				
+				pedidoService.removeProdutoPedido(id, produto);
+				Pedido pedido = pedidoService.listarPorId(id);
+				return ResponseEntity.ok().build();
+
+			}
 			
 			
-			
-			//Vincular Produtos a Pedidos
-			
-			//Remover Produtos de pedidos.
+		
 
 }
