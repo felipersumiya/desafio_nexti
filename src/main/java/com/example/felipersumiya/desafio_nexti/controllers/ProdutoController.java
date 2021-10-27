@@ -51,12 +51,12 @@ public class ProdutoController {
 			produtoService.inserirProduto(produto);
 			
 			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/id}").buildAndExpand(produto.getId()).toUri();
-			return ResponseEntity.created(uri).build();
+			return ResponseEntity.created(uri).body(produto);
 			
 		}
 		
 		//Atualizar Produto
-		@PutMapping
+		@PutMapping (value = "/{id}")
 		public ResponseEntity<Produto> atualizarProduto(@PathVariable Long id, @RequestBody Produto produto){
 			//ajustar este método e deixar certinho
 			produtoService.atualizarProduto(id, produto);
@@ -65,7 +65,7 @@ public class ProdutoController {
 		
 
 		//Excluir Produto
-		@DeleteMapping
+		@DeleteMapping (value = "/{id}")
 		public ResponseEntity<Void> excluirProduto(@PathVariable Long id){
 			
 			produtoService.excluirProduto(id);

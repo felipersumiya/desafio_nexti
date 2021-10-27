@@ -14,6 +14,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.example.felipersumiya.desafio_nexti.services.PedidoService;
+
 @Entity
 @Table (name = "tb_pedido")
 public class Pedido implements Serializable{
@@ -27,6 +29,7 @@ public class Pedido implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
+	
 	private Double totalCompra;
 	private String dataCompra;
 	
@@ -34,6 +37,7 @@ public class Pedido implements Serializable{
 	@JoinTable (name = "tb_pedido_produto", joinColumns = @JoinColumn(name = "pedido_id"), 
 	inverseJoinColumns = @JoinColumn (name = "produto_id"))
 	private List<Produto> produtos = new ArrayList<>();
+	
 	
 	public Pedido() {
 		
@@ -44,7 +48,7 @@ public class Pedido implements Serializable{
 		super();
 		this.id = id;
 		this.cliente = cliente;
-		this.totalCompra = totalCompra;
+		this.totalCompra = 0.0;
 		this.dataCompra = dataCompra;
 	
 	}
@@ -70,11 +74,17 @@ public class Pedido implements Serializable{
 
 
 	public Double getTotalCompra() {
+		
+		Double total;
+		total = this.totalCompra = PedidoService.calcularTotalCompra(this.produtos);
+		setTotalCompra(total);
 		return totalCompra;
 		
 	}
 	
 	public void setTotalCompra(Double totalCompra) {
+		
+		
 		this.totalCompra = totalCompra;
 	}
 
@@ -90,6 +100,7 @@ public class Pedido implements Serializable{
 
 
 	public List<Produto> getProdutos() {
+	
 		return produtos;
 	}
 

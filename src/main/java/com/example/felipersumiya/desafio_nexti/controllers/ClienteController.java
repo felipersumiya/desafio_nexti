@@ -51,12 +51,12 @@ public class ClienteController {
 		clienteService.inserirCliente(cliente);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/id}").buildAndExpand(cliente.getId()).toUri();
-		return ResponseEntity.created(uri).build();
+		return ResponseEntity.created(uri).body(cliente);
 		
 	}
 	
 	//Atualizar cliente
-	@PutMapping
+	@PutMapping (value = "/{id}")
 	public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id, @RequestBody Cliente cliente){
 		//ajustar este método e deixar certinho
 		clienteService.atualizarCliente(id, cliente);
@@ -66,10 +66,10 @@ public class ClienteController {
 	
 
 	//Excluir cliente
-	@DeleteMapping
+	@DeleteMapping (value = "/{id}")
 	public ResponseEntity<Void> excluirCliente(@PathVariable Long id){
 		
-		clienteService.excluirCliente(id);
+		clienteService.excluirClientePorID(id);
 		
 		return ResponseEntity.noContent().build();
 	}

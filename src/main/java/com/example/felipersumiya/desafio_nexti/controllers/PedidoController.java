@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.example.felipersumiya.desafio_nexti.domain.Cliente;
 import com.example.felipersumiya.desafio_nexti.domain.Pedido;
+import com.example.felipersumiya.desafio_nexti.services.ClienteService;
 import com.example.felipersumiya.desafio_nexti.services.PedidoService;
+
 
 @RestController
 @RequestMapping (value = "/pedidos")
@@ -24,6 +27,9 @@ public class PedidoController {
 	
 	@Autowired
 	private PedidoService pedidoService;
+	
+	@Autowired
+	private ClienteService clienteService;
 	
 			// Listar pedidos.
 			@GetMapping
@@ -51,12 +57,12 @@ public class PedidoController {
 				pedidoService.inserirPedido(pedido);
 				
 				URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/id}").buildAndExpand(pedido.getId()).toUri();
-				return ResponseEntity.created(uri).build();
+				return ResponseEntity.created(uri).body(pedido);
 				
 			}
 			
 			//Atualizar pedido
-			@PutMapping
+			@PutMapping (value = "/{id}")
 			public ResponseEntity<Pedido> atualizarpedido(@PathVariable Long id, @RequestBody Pedido pedido){
 				//ajustar este método e deixar certinho
 				pedidoService.atualizarPedido(id, pedido);
@@ -65,7 +71,7 @@ public class PedidoController {
 			
 
 			//Excluir pedido
-			@DeleteMapping
+			@DeleteMapping (value = "/{id}")
 			public ResponseEntity<Void> excluirPedido(@PathVariable Long id){
 				
 				pedidoService.excluirPedido(id);
@@ -77,6 +83,47 @@ public class PedidoController {
 			
 			
 			//Vincular Cliente ao Pedido
+			
+			@PutMapping ("/clienteI/{id}")
+			public ResponseEntity<Pedido> insereClientePedido (@PathVariable Long id, @RequestBody Cliente cliente){
+				
+				pedidoService.inserirClientePedido(id, cliente);
+				Pedido pedido = pedidoService.listarPorId(id);
+				return ResponseEntity.ok().body(pedido);
+
+			}
+			
+			//Remove Cliente do Pedido
+			@PutMapping ("/clienteR/{id}")
+			public ResponseEntity<Pedido> removeClientePedido (@PathVariable Long id, @RequestBody Cliente cliente){
+				
+				pedidoService.removeClientePedido(id, cliente);
+				Pedido pedido = pedidoService.listarPorId(id);
+				return ResponseEntity.ok().body(pedido);
+
+			}
+			
+			
+			
+			
+			/*
+			 * 
+			 * 
+			 * 
+			 * 
+			 * 
+			 * @PutMapping (value = "/{id}")
+	public ResponseEntity<UsuarioDto> insereComicUser (@PathVariable Long id, @RequestBody ComicsDto comicDto){
+	
+		Comics comic = comicsService.converteDto(comicDto);
+		Usuario  usuario  = new Usuario();
+		usuarioComicsService.inserirComicUsuario(id, comic);
+		usuario = usuarioService.findById(id);
+		return ResponseEntity.ok().body(new UsuarioDto(usuario));
+
+	}
+	
+			 */
 			
 			//Remover Clientes de Pedidos
 			

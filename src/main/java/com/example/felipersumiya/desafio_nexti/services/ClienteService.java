@@ -50,7 +50,7 @@ public class ClienteService{
 		
 	}
 
-	public void excluirCliente(Long id) {
+	public void excluirClientePorID(Long id) {
 		
 		clienteRepository.deleteById(id);
 		

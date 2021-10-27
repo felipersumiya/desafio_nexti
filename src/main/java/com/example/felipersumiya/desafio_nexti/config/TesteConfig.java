@@ -45,18 +45,18 @@ public class TesteConfig implements CommandLineRunner {
 		
 		clienteRepository.saveAll(Arrays.asList(c1,c2,c3,c4));
 		// vincular pedido
-		Produto p1 = new Produto(null, "iPhone","smartPhone", 4500.90, 1);
-		Produto p2 = new Produto(null, "MacBook","computador", 9500.00, 1);
-		Produto p3 = new Produto(null, "Mouse","periférico", 100.00, 1);
+		Produto p1 = new Produto(null, "iPhone","smartPhone", 10.0, 3);
+		Produto p2 = new Produto(null, "MacBook","computador", 10.0, 1);
+		Produto p3 = new Produto(null, "Mouse","periférico", 10.0, 1);
 		Produto p4 = new Produto(null, "Fone","periférico", 1000.00, 1);
 		Produto p5 = new Produto(null, "Carregador","acessório smartphone", 60.0, 1);
 
 		produtoRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
 		
 		
-		Pedido pd1 = new Pedido(null, c1, 100.00, "20/01/1989");
-		Pedido pd2 = new Pedido(null, c2, 200.00, "22/01/1989");
-		Pedido pd3 = new Pedido(null, c3, 300.00, "26/01/1989");
+		Pedido pd1 = new Pedido(null, null, 100.00, "20/01/1989");
+		Pedido pd2 = new Pedido(null, null, 200.00, "22/01/1989");
+		Pedido pd3 = new Pedido(null, null, 300.00, "26/01/1989");
 		
 		//Adicionando produtos em pedidos.
 		pd1.getProdutos().add(p1);
@@ -69,14 +69,24 @@ public class TesteConfig implements CommandLineRunner {
 		p3.getPedidos().add(pd1);
 		
 		pd2.getProdutos().add(p1);
+		pd2.getProdutos().add(p5);
+		p5.getPedidos().add(pd2);
+		pd2.getProdutos().add(p4);
+		p4.getPedidos().add(pd2);
 		
 		
 		pd3.getProdutos().add(p3);
 		p3.getPedidos().add(pd3);
+		pd3.getProdutos().add(p5);
+		p5.getPedidos().add(pd3);
 		
 		//vincular pedidos em clientes
 		c1.getPedidos().add(pd1);
 		c2.getPedidos().add(pd3);
+		
+		//adicionando cliente em pedido
+		pd1.setCliente(c1);
+		pd3.setCliente(c2);
 		
 		clienteRepository.saveAll(Arrays.asList(c1,c2));
 		
