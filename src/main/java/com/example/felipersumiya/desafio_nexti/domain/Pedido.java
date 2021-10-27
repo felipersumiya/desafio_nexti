@@ -8,8 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table (name = "tb_pedido")
@@ -21,27 +24,29 @@ public class Pedido implements Serializable{
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Transient
+	@ManyToOne
+	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	private Double totalCompra;
 	private String dataCompra;
 	
-	@Transient
+	@ManyToMany
+	@JoinTable (name = "tb_pedido_produto", joinColumns = @JoinColumn(name = "pedido_id"), 
+	inverseJoinColumns = @JoinColumn (name = "produto_id"))
 	private List<Produto> produtos = new ArrayList<>();
-	
 	
 	public Pedido() {
 		
 	}
 	
 	
-	public Pedido(Long id, Cliente cliente, Double totalCompra, String dataCompra, List<Produto> produtos) {
+	public Pedido(Long id, Cliente cliente, Double totalCompra, String dataCompra) {
 		super();
 		this.id = id;
 		this.cliente = cliente;
 		this.totalCompra = totalCompra;
 		this.dataCompra = dataCompra;
-		this.produtos = produtos;
+	
 	}
 
 	public Long getId() {
@@ -66,9 +71,9 @@ public class Pedido implements Serializable{
 
 	public Double getTotalCompra() {
 		return totalCompra;
+		
 	}
-
-
+	
 	public void setTotalCompra(Double totalCompra) {
 		this.totalCompra = totalCompra;
 	}

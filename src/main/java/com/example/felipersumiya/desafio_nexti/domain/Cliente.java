@@ -1,12 +1,18 @@
 package com.example.felipersumiya.desafio_nexti.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_cliente")
@@ -21,11 +27,13 @@ public class Cliente implements Serializable{
 	private String cpf;
 	private String dataDeNascimento;
 	
-	
+	@JsonIgnore
+	@OneToMany (mappedBy = "cliente" , fetch = FetchType.EAGER)
+	private List<Pedido> pedidos = new ArrayList<>();
+
 	public Cliente() {
 		
 	}
-
 
 	public Cliente(Long id, String nome, String cpf, String dataDeNascimento) {
 		super();
@@ -74,7 +82,14 @@ public class Cliente implements Serializable{
 	public void setDataDeNascimento(String dataDeNascimento) {
 		this.dataDeNascimento = dataDeNascimento;
 	}
+	
 
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	
 
 	@Override
 	public int hashCode() {

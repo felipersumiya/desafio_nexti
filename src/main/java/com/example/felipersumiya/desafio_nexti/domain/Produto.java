@@ -1,11 +1,19 @@
 package com.example.felipersumiya.desafio_nexti.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table (name = "tb_produto")
@@ -20,6 +28,10 @@ public class Produto implements Serializable  {
 	private String descricao;
 	private Double preco;
 	private Integer quantidade;
+	
+	@JsonIgnore
+	@ManyToMany (mappedBy = "produtos")
+	private List<Pedido> pedidos = new ArrayList<>();
 	
 	public Produto() {
 		
@@ -73,6 +85,11 @@ public class Produto implements Serializable  {
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
+	
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
 
 	@Override
 	public int hashCode() {
