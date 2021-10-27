@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.felipersumiya.desafio_nexti.domain.Cliente;
+import com.example.felipersumiya.desafio_nexti.domain.dtos.ClienteDto;
 import com.example.felipersumiya.desafio_nexti.repositories.ClienteRepository;
+
 
 @Service
 public class ClienteService{
@@ -53,6 +55,12 @@ public class ClienteService{
 	public void excluirClientePorID(Long id) {
 		
 		clienteRepository.deleteById(id);
+		
+	}
+	
+	public Cliente converteDto (ClienteDto clienteDto) {
+		
+		 return new Cliente(clienteDto.getId(), clienteDto.getNome(),clienteDto.getCpf(), clienteDto.getDataDeNascimento());
 		
 	}
 	

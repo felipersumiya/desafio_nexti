@@ -50,6 +50,7 @@ public class Pedido implements Serializable{
 		this.cliente = cliente;
 		this.totalCompra = 0.0;
 		this.dataCompra = dataCompra;
+		
 	
 	}
 

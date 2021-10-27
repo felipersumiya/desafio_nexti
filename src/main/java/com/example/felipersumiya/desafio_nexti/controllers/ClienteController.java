@@ -2,6 +2,7 @@ package com.example.felipersumiya.desafio_nexti.controllers;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.felipersumiya.desafio_nexti.domain.Cliente;
+import com.example.felipersumiya.desafio_nexti.domain.dtos.ClienteDto;
 import com.example.felipersumiya.desafio_nexti.services.ClienteService;
+
 
 @RestController
 @RequestMapping ( value = "/clientes")
@@ -27,40 +30,44 @@ public class ClienteController {
 	
 	// Listar clientes.
 	@GetMapping
-	public ResponseEntity<List<Cliente>> listarClientes(){
+	public ResponseEntity<List<ClienteDto>> listarClientes(){
 		
 		List<Cliente> listaClientes = clienteService.listarClientes();
+		List<ClienteDto> listaDto = listaClientes.stream().map( x -> new ClienteDto(x)).collect(Collectors.toList());
 		
-		return ResponseEntity.ok().body(listaClientes);
+		return ResponseEntity.ok().body(listaDto);
 		
 	}
 	
 	//Listar cliente por id.	
 	@GetMapping (value = "/{id}")
-	public ResponseEntity<Cliente> listarPorId(@PathVariable Long id){
+	public ResponseEntity<ClienteDto> listarPorId(@PathVariable Long id){
 		
 		Cliente cliente = clienteService.listarPorId(id);
+		ClienteDto clienteDto = new ClienteDto(cliente);	
 		
-		return ResponseEntity.ok().body(cliente);
+		return ResponseEntity.ok().body(clienteDto);
 	}
 	
 	//Incluir clientes.
 	@PostMapping
-	public ResponseEntity<Cliente> inserirCliente (@RequestBody Cliente cliente){
+	public ResponseEntity<Void> inserirCliente (@RequestBody ClienteDto clienteDto){
 		
+		Cliente cliente = clienteService.converteDto(clienteDto);
 		clienteService.inserirCliente(cliente);
 		
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/id}").buildAndExpand(cliente.getId()).toUri();
-		return ResponseEntity.created(uri).body(cliente);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/id}").buildAndExpand(clienteDto.getId()).toUri();
+		return ResponseEntity.created(uri).build();
 		
 	}
 	
 	//Atualizar cliente
 	@PutMapping (value = "/{id}")
-	public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id, @RequestBody Cliente cliente){
+	public ResponseEntity<Void> atualizarCliente(@PathVariable Long id, @RequestBody ClienteDto clienteDto){
 		//ajustar este método e deixar certinho
+		Cliente cliente = clienteService.converteDto(clienteDto);
 		clienteService.atualizarCliente(id, cliente);
-		return ResponseEntity.ok().body(cliente);
+		return ResponseEntity.ok().build();
 	}
 	
 	

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.felipersumiya.desafio_nexti.domain.Cliente;
 import com.example.felipersumiya.desafio_nexti.domain.Pedido;
 import com.example.felipersumiya.desafio_nexti.domain.Produto;
+import com.example.felipersumiya.desafio_nexti.domain.dtos.PedidoDto;
 import com.example.felipersumiya.desafio_nexti.repositories.ClienteRepository;
 import com.example.felipersumiya.desafio_nexti.repositories.PedidoRepository;
 import com.example.felipersumiya.desafio_nexti.repositories.ProdutoRepository;
@@ -66,6 +67,12 @@ public class PedidoService {
 	public void excluirPedido(Long id) {
 		
 		pedidoRepository.deleteById(id);
+		
+	}
+	
+	public Pedido converteDto (PedidoDto pedidoDto) {
+		
+		 return new Pedido(pedidoDto.getId(), pedidoDto.getCliente(), pedidoDto.getTotalCompra(), pedidoDto.getDataCompra());
 		
 	}
 	

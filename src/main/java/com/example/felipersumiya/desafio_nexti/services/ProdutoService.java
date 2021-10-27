@@ -6,7 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.felipersumiya.desafio_nexti.domain.Cliente;
 import com.example.felipersumiya.desafio_nexti.domain.Produto;
+import com.example.felipersumiya.desafio_nexti.domain.dtos.ClienteDto;
+import com.example.felipersumiya.desafio_nexti.domain.dtos.ProdutoDto;
 import com.example.felipersumiya.desafio_nexti.repositories.ProdutoRepository;
 
 @Service
@@ -54,6 +57,12 @@ public class ProdutoService {
 	public void excluirProduto(Long id) {
 		
 		produtoRepository.deleteById(id);
+		
+	}
+	
+	public Produto converteDto(ProdutoDto produtoDto) {
+		
+		 return new Produto(produtoDto.getId(), produtoDto.getNome(), produtoDto.getDescricao(), produtoDto.getPreco(), produtoDto.getQuantidade());
 		
 	}
 	
