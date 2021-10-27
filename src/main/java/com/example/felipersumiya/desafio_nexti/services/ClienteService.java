@@ -1,6 +1,7 @@
 package com.example.felipersumiya.desafio_nexti.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,13 @@ public class ClienteService{
 	public List<Cliente> listarClientes(){
 		
 		return clienteRepository.findAll();
+		
+	}
+	
+	public Cliente listarPorId(Long id) {
+			
+		Optional<Cliente> cliente = clienteRepository.findById(id);
+		return cliente.get();
 		
 	}
 	
