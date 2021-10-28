@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.example.felipersumiya.desafio_nexti.domain.Cliente;
@@ -14,6 +18,8 @@ import com.example.felipersumiya.desafio_nexti.domain.dtos.PedidoDto;
 import com.example.felipersumiya.desafio_nexti.repositories.ClienteRepository;
 import com.example.felipersumiya.desafio_nexti.repositories.PedidoRepository;
 import com.example.felipersumiya.desafio_nexti.repositories.ProdutoRepository;
+import com.example.felipersumiya.desafio_nexti.services.exceptions.DatabaseException;
+import com.example.felipersumiya.desafio_nexti.services.exceptions.ResourceNotFoundException;
 
 
 @Service
@@ -38,21 +44,41 @@ public class PedidoService {
 	public Pedido listarPorId(Long id) {
 			
 		Optional<Pedido> pedido = pedidoRepository.findById(id);
-		return pedido.get();
+		return pedido.orElseThrow(() -> new ResourceNotFoundException(id));
+	
 		
 	}
 	
 	public void inserirPedido(Pedido pedido) {
 		
-		pedidoRepository.save(pedido);
+		try {
+			
+			pedidoRepository.save(pedido);
+		
+		}catch (DataIntegrityViolationException e) {
+			
+			throw new DatabaseException(pedido.getId());
+		}
 	}
 	
 	public Pedido atualizarPedido(Long id, Pedido pedido) {
 		
-		//rever nomes destes objetos.
-		Pedido pedidoSalvar = pedidoRepository.getById(id);
-		atualizarDados(pedidoSalvar, pedido);
-		return pedidoRepository.save(pedidoSalvar); 
+		
+		try {
+			
+			//rever nomes destes objetos.
+			Pedido pedidoSalvar = pedidoRepository.getById(id);
+			atualizarDados(pedidoSalvar, pedido);
+			return pedidoRepository.save(pedidoSalvar); 
+			
+		}catch (DataIntegrityViolationException e) {
+			
+			throw new DatabaseException();
+			
+		}catch(EntityNotFoundException e) {
+			
+			throw new ResourceNotFoundException(id);
+		}
 	}
 	
 	private void atualizarDados(Pedido pedidoSalvar, Pedido pedido) {
@@ -66,7 +92,19 @@ public class PedidoService {
 
 	public void excluirPedido(Long id) {
 		
-		pedidoRepository.deleteById(id);
+		try {
+			
+			pedidoRepository.deleteById(id);
+			
+		}catch (DataIntegrityViolationException e) {
+			
+			throw new DatabaseException(id);
+			
+		}catch (EmptyResultDataAccessException e) {
+			
+			throw new ResourceNotFoundException(id);
+			
+		}
 		
 	}
 	
@@ -121,8 +159,14 @@ public class PedidoService {
 					clienteRepository.save(cliente);
 				}
 		
-		}catch (RuntimeException e) {
-			e.printStackTrace();
+		}catch (DataIntegrityViolationException e) {
+			
+			throw new DatabaseException(id);
+			
+		}catch (EntityNotFoundException e) {
+			
+			throw new ResourceNotFoundException(id);
+			
 		}
 	}
 	//Exclui cliente de pedido
@@ -144,9 +188,18 @@ public class PedidoService {
 			
 				}
 				
-		}catch (RuntimeException e) {
+		}catch (DataIntegrityViolationException e) {
 			
-			e.printStackTrace();
+			throw new DatabaseException(id);
+			
+		}catch (EntityNotFoundException e) {
+			
+			throw new ResourceNotFoundException(id);
+			
+		}catch (NullPointerException e) {
+			
+			throw new ResourceNotFoundException("Este pedido não possui cliente");
+			
 		}
 		/*
 		if(pedidoBd.getCliente() == null) {
@@ -186,9 +239,14 @@ public class PedidoService {
 			}
 			
 				
-		}catch(RuntimeException e) {
+		}catch (DataIntegrityViolationException e) {
 			
-			e.printStackTrace();
+			throw new DatabaseException(id);
+			
+		}catch (EntityNotFoundException e) {
+			
+			throw new ResourceNotFoundException(id);
+			
 		}
 				
 	}
@@ -249,9 +307,18 @@ public class PedidoService {
 			}*/
 			
 				
-		}catch(RuntimeException e) {
+		}catch (DataIntegrityViolationException e) {
 			
-			e.printStackTrace();
+			throw new DatabaseException(id);
+			
+		}catch (EntityNotFoundException e) {
+			
+			throw new ResourceNotFoundException(id);
+			
+		}catch (NullPointerException e) {
+			
+			throw new ResourceNotFoundException("Este pedido não possui produto");
+			
 		}
 				
 	}

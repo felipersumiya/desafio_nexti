@@ -44,6 +44,7 @@ public class TesteConfig implements CommandLineRunner {
 
 		
 		clienteRepository.saveAll(Arrays.asList(c1,c2,c3,c4));
+		
 		// vincular pedido
 		Produto p1 = new Produto(null, "iPhone","smartPhone", 10.0, 3);
 		Produto p2 = new Produto(null, "MacBook","computador", 10.0, 1);
