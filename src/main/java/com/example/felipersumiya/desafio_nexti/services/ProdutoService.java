@@ -3,14 +3,18 @@ package com.example.felipersumiya.desafio_nexti.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.example.felipersumiya.desafio_nexti.domain.Cliente;
 import com.example.felipersumiya.desafio_nexti.domain.Produto;
-import com.example.felipersumiya.desafio_nexti.domain.dtos.ClienteDto;
 import com.example.felipersumiya.desafio_nexti.domain.dtos.ProdutoDto;
 import com.example.felipersumiya.desafio_nexti.repositories.ProdutoRepository;
+import com.example.felipersumiya.desafio_nexti.services.exceptions.DatabaseException;
+import com.example.felipersumiya.desafio_nexti.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class ProdutoService {
@@ -28,21 +32,41 @@ public class ProdutoService {
 	public Produto listarPorId(Long id) {
 			
 		Optional<Produto> produto = produtoRepository.findById(id);
-		return produto.get();
+		return produto.orElseThrow(() -> new ResourceNotFoundException(id));
+		
 		
 	}
 	
 	public void inserirProduto(Produto produto) {
 		
-		produtoRepository.save(produto);
+		try {
+			
+			produtoRepository.save(produto);
+		
+		}catch(DataIntegrityViolationException e) {
+			
+			throw new DatabaseException(produto.getId());
+		}
 	}
 	
 	public Produto atualizarProduto(Long id, Produto produto) {
 		
-		//rever nomes destes objetos.
-		Produto produtoSalvar = produtoRepository.getById(id);
-		atualizarDados(produtoSalvar, produto);
-		return produtoRepository.save(produtoSalvar); 
+		
+		try {
+		
+			//rever nomes destes objetos.
+			Produto produtoSalvar = produtoRepository.getById(id);
+			atualizarDados(produtoSalvar, produto);
+			return produtoRepository.save(produtoSalvar); 
+			
+		}catch (DataIntegrityViolationException e) {
+			
+			throw new DatabaseException();
+			
+		}catch(EntityNotFoundException e) {
+			
+			throw new ResourceNotFoundException(id);
+		}
 	}
 	
 	private void atualizarDados(Produto produtoSalvar, Produto produto) {
@@ -56,7 +80,19 @@ public class ProdutoService {
 
 	public void excluirProduto(Long id) {
 		
-		produtoRepository.deleteById(id);
+		try {
+			
+			produtoRepository.deleteById(id);
+			
+		}catch (DataIntegrityViolationException e) {
+			
+			throw new DatabaseException(id);
+			
+		}catch (EmptyResultDataAccessException e) {
+			
+			throw new ResourceNotFoundException(id);
+			
+		}
 		
 	}
 	
