@@ -53,6 +53,5 @@ public class ClienteDto {
 		this.dataDeNascimento = dataDeNascimento;
 	}
 	
-	
 
 }

@@ -48,7 +48,7 @@ public class Pedido implements Serializable{
 		super();
 		this.id = id;
 		this.cliente = cliente;
-		this.totalCompra = 0.0;
+		this.totalCompra = getTotalCompra();	
 		this.dataCompra = dataCompra;
 		
 	
@@ -76,9 +76,7 @@ public class Pedido implements Serializable{
 
 	public Double getTotalCompra() {
 		
-		Double total;
-		total = this.totalCompra = PedidoService.calcularTotalCompra(this.produtos);
-		setTotalCompra(total);
+		setTotalCompra(this.totalCompra = PedidoService.calcularTotalCompra(getProdutos()));
 		return totalCompra;
 		
 	}

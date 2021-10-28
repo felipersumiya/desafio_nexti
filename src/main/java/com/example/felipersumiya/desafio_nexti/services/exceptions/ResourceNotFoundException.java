@@ -12,6 +12,5 @@ public class ResourceNotFoundException extends RuntimeException {
 		super("Recurso não encontrado. Id:" + id);
 	}
 	
-	
 
 }

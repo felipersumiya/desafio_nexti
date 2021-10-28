@@ -9,6 +9,7 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
 import com.example.felipersumiya.desafio_nexti.domain.Cliente;
@@ -38,6 +39,7 @@ public class PedidoService {
 	public List<Pedido> listarPedidos(){
 		
 		return pedidoRepository.findAll();
+		
 		
 	}
 	
@@ -167,6 +169,14 @@ public class PedidoService {
 			
 			throw new ResourceNotFoundException(id);
 			
+		}catch (IllegalArgumentException e) {
+			
+			throw new DatabaseException(id);
+			
+		}catch (InvalidDataAccessApiUsageException e) {
+			
+			throw new DatabaseException(id);
+			
 		}
 	}
 	//Exclui cliente de pedido
@@ -200,22 +210,15 @@ public class PedidoService {
 			
 			throw new ResourceNotFoundException("Este pedido não possui cliente");
 			
-		}
-		/*
-		if(pedidoBd.getCliente() == null) {
+		}catch (IllegalArgumentException e) {
 			
-			System.out.println("O pedido não possui cliente vinculado");
-		}
-		
-		if (pedidoBd.getCliente().getId() != clienteObj.getId()) {
+			throw new DatabaseException(id);
 			
-			System.out.println("O cliente enviado na requisição não corresponde ao cliente vinculado ao pedido");
+		}catch (InvalidDataAccessApiUsageException e) {
+			
+			throw new DatabaseException(id);
 			
 		}
-		
-		//Se o id do Cliente for != do id do cliente enviado na requisição, quer dizer que o cliente não pode ser excluído,
-		// ou por que o cliente que o pedido possui é outro, OU porque o Pedido não possui cliente vinculado
-		 */
 		
 	}
 	//Insere o produto em Pedido.
@@ -247,6 +250,14 @@ public class PedidoService {
 			
 			throw new ResourceNotFoundException(id);
 			
+		}catch (IllegalArgumentException e) {
+			
+			throw new DatabaseException(id);
+			
+		}catch (InvalidDataAccessApiUsageException e) {
+			
+			throw new DatabaseException(id);
+			
 		}
 				
 	}
@@ -256,7 +267,7 @@ public class PedidoService {
 		
 		try {
 			
-			System.out.println("Entrou no remove produto");
+	
 			List<Produto> listBD = new ArrayList<>();
 			List<Pedido> listP = new ArrayList<>();
 			
@@ -264,49 +275,18 @@ public class PedidoService {
 			Produto produtoObj = produtoRepository.getById(produto.getId());
 			
 			
-			System.out.println("Produto:" + produtoObj.getNome() + produtoObj.getId());
 			//obtém a lista de produtos daquele pedido
 			listBD = pedidoBd.getProdutos();
 			listP = produtoObj.getPedidos();
-			//producersProcedureActive.removeIf(producer -> producer.getPod().equals(pod));
 			
+		
 			listBD.removeIf(x -> x.getId().equals(produtoObj.getId()));
 			listP.removeIf(x -> x.getId().equals(pedidoBd.getId()));
 			
 			pedidoRepository.save(pedidoBd);
 			produtoRepository.save(produto);
 			
-			/*for(Produto x : listBD) {
-				
-				System.out.println("Itens da listaBD");
-				System.out.println("Produto:" + x.getNome() + x.getId());
-			}
 			
-			if(listBD.contains(produtoObj) == false) {
-				
-				System.out.println("Entrou no if, contem o produto");
-				pedidoBd.getProdutos().remove(produtoObj);
-				produtoObj.getPedidos().remove(pedidoBd);
-				
-				//pedidoBd.getProdutos().clear();
-				//produtoObj.getPedidos().clear();
-				for(Produto x : pedidoBd.getProdutos()) {
-					
-					System.out.println("Itens da pedidosBD após método remove");
-					System.out.println("Produtos:" + x.getNome() + x.getId());
-				}
-				
-				for(Pedido x : produtoObj.getPedidos()) {
-					
-					System.out.println("Itens da produtoOBJ após método remove");
-					System.out.println("Pedidos:" + x.getId());
-				
-				
-				pedidoRepository.save(pedidoBd);
-				produtoRepository.save(produto);
-			}*/
-			
-				
 		}catch (DataIntegrityViolationException e) {
 			
 			throw new DatabaseException(id);
@@ -318,6 +298,14 @@ public class PedidoService {
 		}catch (NullPointerException e) {
 			
 			throw new ResourceNotFoundException("Este pedido não possui produto");
+			
+		}catch (IllegalArgumentException e) {
+			
+			throw new DatabaseException(id);
+			
+		}catch (InvalidDataAccessApiUsageException e) {
+			
+			throw new DatabaseException(id);
 			
 		}
 				

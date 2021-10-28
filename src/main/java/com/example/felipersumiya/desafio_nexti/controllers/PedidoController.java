@@ -47,6 +47,7 @@ public class PedidoController {
 				List<Pedido> listaPedidos = pedidoService.listarPedidos();
 				List<PedidoDto> listaPedidosDtos = listaPedidos.stream().map( x -> new PedidoDto(x)).collect(Collectors.toList());
 				
+				
 				return ResponseEntity.ok().body(listaPedidosDtos);
 				
 			}
@@ -57,6 +58,8 @@ public class PedidoController {
 				
 				Pedido pedido = pedidoService.listarPorId(id);
 				PedidoDto pedidoDto = new PedidoDto(pedido);
+				
+	
 				return ResponseEntity.ok().body(pedidoDto);
 			}
 			
@@ -75,6 +78,7 @@ public class PedidoController {
 			//Atualizar pedido
 			@PutMapping (value = "/{id}")
 			public ResponseEntity<Void> atualizarpedido(@PathVariable Long id, @RequestBody PedidoDto pedidoDto){
+				
 				//ajustar este método e deixar certinho
 				
 				Pedido pedido = pedidoService.converteDto(pedidoDto);
@@ -143,21 +147,6 @@ public class PedidoController {
 
 			}
 			
-			/*
-			 * 
-			 * 
-			 * 
-			 * @PutMapping ("/produtoR/{id}")
-			public ResponseEntity<Pedido> removeProdutoPedido (@PathVariable Long id, @RequestBody Produto produto){
-				
-				pedidoService.removeProdutoPedido(id, produto);
-				Pedido pedido = pedidoService.listarPorId(id);
-				return ResponseEntity.ok().build();
-
-			}
-			 * 
-			 * 
-			 */
-			
-			
+		
+		
 }

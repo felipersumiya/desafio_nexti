@@ -67,6 +67,7 @@ public class ClienteService{
 			throw new DatabaseException();
 			
 		}catch (EntityNotFoundException e) {
+			
 			throw new ResourceNotFoundException(id);
 			
 		}
@@ -76,7 +77,7 @@ public class ClienteService{
 	private void atualizarDaddos(Cliente clienteSalvar, Cliente cliente) {
 		
 		clienteSalvar.setNome(cliente.getNome());
-		clienteSalvar.setCpf(cliente.getCpf()); // pensar se deve atualizarCpf
+		clienteSalvar.setCpf(cliente.getCpf()); 
 		clienteSalvar.setDataDeNascimento(cliente.getDataDeNascimento());
 		
 	}
@@ -88,6 +89,7 @@ public class ClienteService{
 			clienteRepository.deleteById(id);
 			
 		}catch (EmptyResultDataAccessException e) {
+			
 			throw new ResourceNotFoundException(id);
 			
 		}catch (DataIntegrityViolationException e) {

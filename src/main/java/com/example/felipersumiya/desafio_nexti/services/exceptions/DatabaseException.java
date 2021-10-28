@@ -1,6 +1,5 @@
 package com.example.felipersumiya.desafio_nexti.services.exceptions;
 
-import javax.xml.crypto.Data;
 
 public class DatabaseException extends RuntimeException{
 
