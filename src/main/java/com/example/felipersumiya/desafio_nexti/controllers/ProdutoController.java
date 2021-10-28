@@ -34,7 +34,7 @@ public class ProdutoController {
 			
 			
 			List<Produto> listaProdutos = produtoService.listarProdutos();
-			List<ProdutoDto> listaProdutosDto = listaProdutos.stream().map( x -> new ProdutoDto(x)).collect(Collectors.toList());
+			List<ProdutoDto> listaProdutosDto = listaProdutos.stream().map( produto -> new ProdutoDto(produto)).collect(Collectors.toList());
 			
 			return ResponseEntity.ok().body(listaProdutosDto);
 			

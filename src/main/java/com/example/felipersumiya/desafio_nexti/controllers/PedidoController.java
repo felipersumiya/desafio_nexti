@@ -45,7 +45,7 @@ public class PedidoController {
 			public ResponseEntity<List<PedidoDto>> listarpedidos(){
 				
 				List<Pedido> listaPedidos = pedidoService.listarPedidos();
-				List<PedidoDto> listaPedidosDtos = listaPedidos.stream().map( x -> new PedidoDto(x)).collect(Collectors.toList());
+				List<PedidoDto> listaPedidosDtos = listaPedidos.stream().map( pedido -> new PedidoDto(pedido)).collect(Collectors.toList());
 				
 				
 				return ResponseEntity.ok().body(listaPedidosDtos);

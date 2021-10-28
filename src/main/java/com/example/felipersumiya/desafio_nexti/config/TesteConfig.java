@@ -20,7 +20,7 @@ import com.example.felipersumiya.desafio_nexti.repositories.ProdutoRepository;
 
 
 @Configuration
-@Profile ("test")
+@Profile ("dev")
 public class TesteConfig implements CommandLineRunner {
 	
 	@Autowired

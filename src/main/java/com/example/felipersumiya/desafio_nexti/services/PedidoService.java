@@ -129,9 +129,9 @@ public class PedidoService {
 		
 		else {
 		
-			for(Produto x : produtos) {
+			for(Produto produto : produtos) {
 			
-				total += (x.getPreco() * x.getQuantidade());
+				total += (produto.getPreco() * produto.getQuantidade());
 			
 			}
 		}
@@ -226,14 +226,14 @@ public class PedidoService {
 		
 		try {
 			
-			List<Produto> listBD = new ArrayList<>();
+			List<Produto> listaProdutosBd = new ArrayList<>();
 			Pedido pedidoBd = pedidoRepository.getById(id);
 			Produto produtoObj = produtoRepository.getById(produto.getId());
 			
 			//obtém a lista de produtos daquele pedido
-			listBD = pedidoBd.getProdutos();
+			listaProdutosBd = pedidoBd.getProdutos();
 			
-			if(listBD.contains(produtoObj) == false) {
+			if(listaProdutosBd.contains(produtoObj) == false) {
 				
 				pedidoBd.getProdutos().add(produtoObj);
 				produtoObj.getPedidos().add(pedidoBd);
@@ -268,20 +268,20 @@ public class PedidoService {
 		try {
 			
 	
-			List<Produto> listBD = new ArrayList<>();
-			List<Pedido> listP = new ArrayList<>();
+			List<Produto> listaProdutosBd = new ArrayList<>();
+			List<Pedido> listaPedidosBd = new ArrayList<>();
 			
 			Pedido pedidoBd = pedidoRepository.getById(id);
 			Produto produtoObj = produtoRepository.getById(produto.getId());
 			
 			
 			//obtém a lista de produtos daquele pedido
-			listBD = pedidoBd.getProdutos();
-			listP = produtoObj.getPedidos();
+			listaProdutosBd = pedidoBd.getProdutos();
+			listaPedidosBd = produtoObj.getPedidos();
 			
 		
-			listBD.removeIf(x -> x.getId().equals(produtoObj.getId()));
-			listP.removeIf(x -> x.getId().equals(pedidoBd.getId()));
+			listaProdutosBd.removeIf(produtoLista -> produtoLista.getId().equals(produtoObj.getId()));
+			listaPedidosBd.removeIf(pedidoLista -> pedidoLista.getId().equals(pedidoBd.getId()));
 			
 			pedidoRepository.save(pedidoBd);
 			produtoRepository.save(produto);

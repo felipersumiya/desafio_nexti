@@ -33,7 +33,7 @@ public class ClienteController {
 	public ResponseEntity<List<ClienteDto>> listarClientes(){
 		
 		List<Cliente> listaClientes = clienteService.listarClientes();
-		List<ClienteDto> listaDto = listaClientes.stream().map( x -> new ClienteDto(x)).collect(Collectors.toList());
+		List<ClienteDto> listaDto = listaClientes.stream().map( cliente -> new ClienteDto(cliente)).collect(Collectors.toList());
 		
 		return ResponseEntity.ok().body(listaDto);
 		
