@@ -67,7 +67,7 @@ Para que a aplicação realize a inserção de alguns registros iniciais no banc
 
 @Profile (value = "dev")
 
-Caso este atributo não siga este padrão as tabelas serão inicilizadas sem nenhum registro.
+Caso este atributo não siga este padrão as tabelas serão inicializadas sem nenhum registro.
 
 
 # Execução de funcionalidades da aplicação
