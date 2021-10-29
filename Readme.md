@@ -63,6 +63,12 @@ Para que a aplicação execute corretamente as configurações do banco de dados
 Variavel local de configuração:
 ``spring.profiles.active = dev``
 
+Para que a aplicação realize a inserção de alguns dados iniciais no banco de dados é necessário verificar se a annotation "@Profile" da classe "TesteConfig.java" (``/src/main/java/com/example/felipersumiya/desafio_nexti/config/``) está com o atributo "dev". Veja abaixo:
+
+@Profile (value = "dev")
+
+Caso este atributo não siga este padrão as tabelas serão inicilizadas sem nenhum dado.
+
 
 # Execução de funcionalidades da aplicação
 
