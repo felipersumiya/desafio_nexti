@@ -7,17 +7,17 @@ Este projeto tem como objetivo o desenvolvimento de uma API de gerenciamento de 
 
 # Requisitos Funcionais
 
-Basicamente as operações necessárias para atender a API de gerenciamento de pedidos são:
+As operações necessárias para atender a API de gerenciamento de pedidos são:
 
-- Clientes: cadastrar, alterar, listar e excluir.
+- **Clientes:** cadastrar, alterar, listar e excluir.
 
-- Produtos: cadastrar, alterar, listar e excluir.
+- **Produtos:** cadastrar, alterar, listar e excluir.
 
-- Pedidos: cadastrar, alterar, listar e excluir.
+- **Pedidos:** cadastrar, alterar, listar e excluir.
 
-- Pedidos e clientes: vincular e desvincular.
+- **Pedidos e clientes:** vincular e desvincular.
 
-- Pedidos e produtos: vincular e desvincular.
+- **Pedidos e produtos:** vincular e desvincular.
 
 
 # Requisitos e ferramentas
