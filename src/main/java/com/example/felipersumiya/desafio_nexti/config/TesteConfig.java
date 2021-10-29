@@ -3,7 +3,7 @@ package com.example.felipersumiya.desafio_nexti.config;
 
 
 import java.util.Arrays;
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
