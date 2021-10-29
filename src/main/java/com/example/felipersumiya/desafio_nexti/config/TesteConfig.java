@@ -89,21 +89,13 @@ public class TesteConfig implements CommandLineRunner {
 		
 		clienteRepository.saveAll(Arrays.asList(c1,c2));
 		
-		
-		
 		//vincular pedidos a produtos.
 		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
 		
 		//salvar pedidos
 		pedidoRepository.saveAll(Arrays.asList(pd1,pd2,pd3));
 		
-		/*for (List<Produto> x : pd1.getProdutos()) {
-			
-			System.out.println("quantidade de produtos:" + x.size() );
-		}*/
-		
-		System.out.println("Passou aqui");
-		System.out.println("Tamanho da lista de produtos: de pedido 1:" + pd1.getProdutos().size()  );
+
 	}
 
 }
