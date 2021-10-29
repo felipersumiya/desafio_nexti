@@ -72,7 +72,7 @@ Caso este atributo não siga este padrão as tabelas serão inicializadas sem ne
 
 # Execução de funcionalidades da aplicação
 
-Assim que a aplicação do Spring boot estiver inicializada corretamente, os recursos (endpoints) poderão ser acessados através do Postman; localmente (porta 8080).
+Assim que a aplicação do Spring Boot estiver inicializada corretamente, os recursos (endpoints) poderão ser acessados através do Postman; localmente (porta 8080).
 
 
 ## Endpoints
