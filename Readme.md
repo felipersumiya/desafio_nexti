@@ -72,7 +72,7 @@ Caso este atributo não siga este padrão as tabelas serão inicializadas sem ne
 
 # Execução de funcionalidades da aplicação
 
-Assim que a aplicação do Spring Boot estiver inicializada corretamente, os recursos (endpoints) poderão ser acessados através do Postman; localmente (porta 8080).
+Assim que a aplicação do Spring Boot estiver inicializada corretamente, os recursos (endpoints) poderão ser acessados localmente (porta 8080).
 
 
 ## Endpoints
@@ -84,6 +84,7 @@ Para que seja possível executar os métodos abaixo e realizar as operações da
 http://localhost:8080/desafio_nexti/clientes
 
 Métodos:
+
 GET: Listar clientes
 
 POST: Inserir clientes
@@ -98,6 +99,7 @@ DELETE: Excluir clientes
 http://localhost:8080/desafio_nexti/produtos
 
 Métodos:
+
 GET: Listar produtos
 
 POST: Inserir produtos
@@ -121,7 +123,7 @@ PUT: Alterar pedidos
 DELETE: Excluir pedidos
 
 
-### Pedidos - vincular Clientes
+### Pedidos - vincular clientes
 Método: PUT
 
 Vincular clientes
