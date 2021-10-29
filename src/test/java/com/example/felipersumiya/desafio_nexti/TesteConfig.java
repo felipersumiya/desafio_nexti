@@ -1,14 +1,14 @@
-package com.example.felipersumiya.desafio_nexti.config;
+package com.example.felipersumiya.desafio_nexti;
 
 import java.util.Arrays;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-
+import org.springframework.test.context.ActiveProfiles;
 
 import com.example.felipersumiya.desafio_nexti.domain.Cliente;
 import com.example.felipersumiya.desafio_nexti.domain.Pedido;
@@ -19,6 +19,7 @@ import com.example.felipersumiya.desafio_nexti.repositories.ProdutoRepository;
 
 @Configuration
 @Profile ("test")
+@SpringBootTest
 public class TesteConfig implements CommandLineRunner {
 	
 	@Autowired
