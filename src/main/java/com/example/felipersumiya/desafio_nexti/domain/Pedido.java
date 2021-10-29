@@ -102,8 +102,8 @@ public class Pedido implements Serializable{
 	
 		return produtos;
 	}
-
-
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

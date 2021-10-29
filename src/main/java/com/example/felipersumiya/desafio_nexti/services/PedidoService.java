@@ -90,6 +90,7 @@ public class PedidoService {
 		pedidoSalvar.setCliente(pedido.getCliente());
 		pedidoSalvar.setDataCompra(pedido.getDataCompra());
 		pedidoSalvar.setTotalCompra(pedido.getTotalCompra());
+
 		
 	}
 
