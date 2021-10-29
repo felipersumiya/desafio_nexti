@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class StandardError {
 	
-
+	//Classe criada para representar a estrutura de dados exibida nas requisições quando ocorrem as exceções.
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant timestamp;

@@ -75,7 +75,7 @@ Para que seja possível executar os métodos abaixo e realizar as operações da
 
 ### Clientes
 
-http://localhost:8080/clientes
+http://localhost:8080/desafio_nexti/clientes
 
 Métodos:
 GET: Listar clientes
@@ -89,7 +89,7 @@ DELETE: Excluir clientes
 
 
 ### Produtos
-http://localhost:8080/produtos
+http://localhost:8080/desafio_nexti/produtos
 
 Métodos:
 GET: Listar produtos
@@ -102,7 +102,7 @@ DELETE: Excluir produtos
 
 
 ### Pedidos
-http://localhost:8080/pedidos
+http://localhost:8080/desafio_nexti/pedidos
 
 Métodos:
 
@@ -119,19 +119,19 @@ DELETE: Excluir pedidos
 Método: PUT
 
 Vincular clientes
-http://localhost:8080/pedidos/clienteI/{id}
+http://localhost:8080/pedidos/desafio_nexti/clienteI/{id}
 
 Desvincular clientes
-http://localhost:8080/pedidos/clienteR/{id}
+http://localhost:8080/pedidos/desafio_nexti/clienteR/{id}
 
 ### Pedidos - vincular produtos
 Método: PUT
 
 Vincular produtos
-http://localhost:8080/pedidos/produtoI/{id}
+http://localhost:8080/pedidos/desafio_nexti/produtoI/{id}
 
 Desvincular produtos
-http://localhost:8080/pedidos/produtoR/{id}
+http://localhost:8080/pedidos/desafio_nexti/produtoR/{id}
 
 # Conclusão
 

@@ -17,7 +17,7 @@ import com.example.felipersumiya.desafio_nexti.repositories.ProdutoRepository;
 
 
 @Configuration
-@Profile ("test")
+@Profile ("dev")
 public class TesteConfig implements CommandLineRunner {
 	
 	@Autowired
@@ -36,7 +36,7 @@ public class TesteConfig implements CommandLineRunner {
 		//Adiciona clientes.
 		
 		Cliente c1 = new Cliente(null, "Felipe Sumiya", "300.200.578-50", "29/01/1989");
-		Cliente c2 = new Cliente(null, "Bruno Fernando", "239.265.578-20", "20/02/1983");
+		Cliente c2 = new Cliente(null, "Bruno Andrade", "239.265.578-20", "20/02/1983");
 		Cliente c3 = new Cliente(null, "Leandro Vieria", "379.265.578-10", "29/01/1985");
 		Cliente c4 = new Cliente(null, "Bruna Soares", "234.264.578-00", "29/01/1999");
 
@@ -80,10 +80,12 @@ public class TesteConfig implements CommandLineRunner {
 		//Vincula pedidos em clientes.
 		c1.getPedidos().add(pd1);
 		c2.getPedidos().add(pd3);
+		c1.getPedidos().add(pd2);
 		
 		//Vincula clientes em pedidos.
 		pd1.setCliente(c1);
 		pd3.setCliente(c2);
+		pd2.setCliente(c1);
 		
 		//Atualiza novamente os objetos no banco de dados.
 		
