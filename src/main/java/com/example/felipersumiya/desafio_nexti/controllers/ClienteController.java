@@ -28,14 +28,14 @@ public class ClienteController {
 	@Autowired
 	private ClienteService clienteService;
 	
-	// Listar clientes.
+	//Listar clientes.
 	@GetMapping
 	public ResponseEntity<List<ClienteDto>> listarClientes(){
 		
 		List<Cliente> listaClientes = clienteService.listarClientes();
-		List<ClienteDto> listaDto = listaClientes.stream().map( cliente -> new ClienteDto(cliente)).collect(Collectors.toList());
+		List<ClienteDto> listaClientesDto = listaClientes.stream().map( cliente -> new ClienteDto(cliente)).collect(Collectors.toList());
 		
-		return ResponseEntity.ok().body(listaDto);
+		return ResponseEntity.ok().body(listaClientesDto);
 		
 	}
 	
@@ -49,7 +49,7 @@ public class ClienteController {
 		return ResponseEntity.ok().body(clienteDto);
 	}
 	
-	//Incluir clientes.
+	//Incluir cliente.
 	@PostMapping
 	public ResponseEntity<Void> inserirCliente (@RequestBody ClienteDto clienteDto){
 		
@@ -61,11 +61,11 @@ public class ClienteController {
 		
 	}
 	
-	//Atualizar cliente
+	//Atualizar cliente.
 	@PutMapping (value = "/{id}")
 	public ResponseEntity<Void> atualizarCliente(@PathVariable Long id, @RequestBody ClienteDto clienteDto){
 		
-		//ajustar este método e deixar certinho
+		
 		Cliente cliente = clienteService.converteDto(clienteDto);
 		clienteService.atualizarCliente(id, cliente);
 		return ResponseEntity.ok().build();
@@ -73,7 +73,7 @@ public class ClienteController {
 	
 	
 
-	//Excluir cliente
+	//Excluir cliente.
 	@DeleteMapping (value = "/{id}")
 	public ResponseEntity<Void> excluirCliente(@PathVariable Long id){
 		

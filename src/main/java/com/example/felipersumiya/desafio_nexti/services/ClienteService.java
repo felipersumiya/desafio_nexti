@@ -57,9 +57,9 @@ public class ClienteService{
 		
 		try {
 			
-		//rever nomes destes objetos.
+		
 		Cliente clienteSalvar = clienteRepository.getById(id);
-		atualizarDaddos(clienteSalvar, cliente);
+		atualizarDados(clienteSalvar, cliente);
 		return clienteRepository.save(clienteSalvar); 
 		
 		}catch(DataIntegrityViolationException e) {
@@ -74,7 +74,9 @@ public class ClienteService{
 		
 	}
 	
-	private void atualizarDaddos(Cliente clienteSalvar, Cliente cliente) {
+	//Atualiza os dados em clienteSalvar com os dados de cliente.
+	
+	private void atualizarDados(Cliente clienteSalvar, Cliente cliente) {
 		
 		clienteSalvar.setNome(cliente.getNome());
 		clienteSalvar.setCpf(cliente.getCpf()); 
@@ -101,6 +103,7 @@ public class ClienteService{
 		
 	}
 	
+	//Converte o clienteDto para o tipo Cliente.
 	public Cliente converteDto (ClienteDto clienteDto) {
 		
 		 return new Cliente(clienteDto.getId(), clienteDto.getNome(),clienteDto.getCpf(), clienteDto.getDataDeNascimento());

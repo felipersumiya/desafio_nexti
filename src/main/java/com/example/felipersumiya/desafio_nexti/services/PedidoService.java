@@ -68,7 +68,7 @@ public class PedidoService {
 		
 		try {
 			
-			//rever nomes destes objetos.
+			
 			Pedido pedidoSalvar = pedidoRepository.getById(id);
 			atualizarDados(pedidoSalvar, pedido);
 			return pedidoRepository.save(pedidoSalvar); 
@@ -83,9 +83,10 @@ public class PedidoService {
 		}
 	}
 	
+	//Atualiza os dados em pedidoSalvar com os dados de pedido.
+	
 	private void atualizarDados(Pedido pedidoSalvar, Pedido pedido) {
 		
-		//Ver quais dados fazem sentido serem atualizados.
 		pedidoSalvar.setCliente(pedido.getCliente());
 		pedidoSalvar.setDataCompra(pedido.getDataCompra());
 		pedidoSalvar.setTotalCompra(pedido.getTotalCompra());
@@ -110,6 +111,7 @@ public class PedidoService {
 		
 	}
 	
+	//Converte o pedidoDto para o tipo Pedido.
 	public Pedido converteDto (PedidoDto pedidoDto) {
 		
 		 return new Pedido(pedidoDto.getId(), pedidoDto.getCliente(), pedidoDto.getTotalCompra(), pedidoDto.getDataCompra());
@@ -145,20 +147,20 @@ public class PedidoService {
 		
 		try {
 				Pedido pedidoBd= pedidoRepository.getById(id);
-				Cliente clienteObj = clienteRepository.getById(cliente.getId());
+				Cliente clienteBd = clienteRepository.getById(cliente.getId());
 		
 				//Salvar cliente em pedido
 		
 				if(pedidoBd.getCliente() == null) {
 			
 					//Adiciona os atributos nos objetos
-					pedidoBd.setCliente(cliente);
-					clienteObj.getPedidos().add(pedidoBd);
+					pedidoBd.setCliente(clienteBd);
+					clienteBd.getPedidos().add(pedidoBd);
 			
-					// Persiste os objetos no repositório
+					//Atualiza pedido e cliente no banco de dados.
 			
 					pedidoRepository.save(pedidoBd);
-					clienteRepository.save(cliente);
+					clienteRepository.save(clienteBd);
 				}
 		
 		}catch (DataIntegrityViolationException e) {
@@ -179,22 +181,25 @@ public class PedidoService {
 			
 		}
 	}
-	//Exclui cliente de pedido
+	
+	//Exclui cliente de pedido.
 	public void removeClientePedido(Long id, Cliente cliente) {
 		
 
 		try {
 		
 				Pedido pedidoBd= pedidoRepository.getById(id);
-				Cliente clienteObj = clienteRepository.getById(cliente.getId());
+				Cliente clienteBd = clienteRepository.getById(cliente.getId());
 		
 		
-				if(pedidoBd.getCliente().getId() == clienteObj.getId()) {
+				if(pedidoBd.getCliente().getId() == clienteBd.getId()) {
 			
-					pedidoBd.setCliente(null);//remove cliente
-					clienteObj.getPedidos().remove(pedidoBd);//remove o Pedido da lista de Clientes
+					pedidoBd.setCliente(null);//remove cliente do pedido.
+					clienteBd.getPedidos().remove(pedidoBd);//remove o Pedido da lista de Clientes
+					
+					//Atualiza pedido e cliente no banco de dados
 					pedidoRepository.save(pedidoBd);
-					clienteRepository.save(clienteObj);
+					clienteRepository.save(clienteBd);
 			
 				}
 				
@@ -228,17 +233,19 @@ public class PedidoService {
 			
 			List<Produto> listaProdutosBd = new ArrayList<>();
 			Pedido pedidoBd = pedidoRepository.getById(id);
-			Produto produtoObj = produtoRepository.getById(produto.getId());
+			Produto produtoBd = produtoRepository.getById(produto.getId());
 			
 			//obtém a lista de produtos daquele pedido
 			listaProdutosBd = pedidoBd.getProdutos();
 			
-			if(listaProdutosBd.contains(produtoObj) == false) {
+			if(listaProdutosBd.contains(produtoBd) == false) {
 				
-				pedidoBd.getProdutos().add(produtoObj);
-				produtoObj.getPedidos().add(pedidoBd);
+				pedidoBd.getProdutos().add(produtoBd);
+				produtoBd.getPedidos().add(pedidoBd);
+				
+				//Atualiza pedido e produto no banco de dados.
 				pedidoRepository.save(pedidoBd);
-				produtoRepository.save(produto);
+				produtoRepository.save(produtoBd);
 			}
 			
 				
@@ -272,19 +279,22 @@ public class PedidoService {
 			List<Pedido> listaPedidosBd = new ArrayList<>();
 			
 			Pedido pedidoBd = pedidoRepository.getById(id);
-			Produto produtoObj = produtoRepository.getById(produto.getId());
+			Produto produtoBd = produtoRepository.getById(produto.getId());
 			
 			
-			//obtém a lista de produtos daquele pedido
+			//Obtém a lista de produtos daquele pedido
 			listaProdutosBd = pedidoBd.getProdutos();
-			listaPedidosBd = produtoObj.getPedidos();
+			//Obtém a lista de pedidos do produto.
+			listaPedidosBd = produtoBd.getPedidos();
 			
-		
-			listaProdutosBd.removeIf(produtoLista -> produtoLista.getId().equals(produtoObj.getId()));
+			//Remove o produto da lista caso ele exista.
+			listaProdutosBd.removeIf(produtoLista -> produtoLista.getId().equals(produtoBd.getId()));
+			//Remove o pedido da lista caso ele exista.
 			listaPedidosBd.removeIf(pedidoLista -> pedidoLista.getId().equals(pedidoBd.getId()));
 			
+			//Atualiza os dados no banco de dados.
 			pedidoRepository.save(pedidoBd);
-			produtoRepository.save(produto);
+			produtoRepository.save(produtoBd);
 			
 			
 		}catch (DataIntegrityViolationException e) {
