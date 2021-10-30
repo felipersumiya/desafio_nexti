@@ -127,19 +127,19 @@ DELETE: Excluir pedidos
 Método: PUT
 
 Vincular clientes
-http://localhost:8080/pedidos/desafio_nexti/clienteI/{id}
+http://localhost:8080/desafio_nexti/pedidos/clienteI/{id}
 
 Desvincular clientes
-http://localhost:8080/pedidos/desafio_nexti/clienteR/{id}
+http://localhost:8080/desafio_nexti/pedidos/clienteR/{id}
 
 ### Pedidos - vincular produtos
 Método: PUT
 
 Vincular produtos
-http://localhost:8080/pedidos/desafio_nexti/produtoI/{id}
+http://localhost:8080/desafio_nexti/pedidos/produtoI/{id}
 
 Desvincular produtos
-http://localhost:8080/pedidos/desafio_nexti/produtoR/{id}
+http://localhost:8080/desafio_nexti/pedidos/produtoR/{id}
 
 # Conclusão
 
