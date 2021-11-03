@@ -28,7 +28,7 @@ public class ClienteController {
 	@Autowired
 	private ClienteService clienteService;
 	
-	// Listar clientes.
+	//Listar clientes.
 	@GetMapping
 	public ResponseEntity<List<ClienteDto>> listarClientes(){
 		
@@ -65,7 +65,7 @@ public class ClienteController {
 	@PutMapping (value = "/{id}")
 	public ResponseEntity<Void> atualizarCliente(@PathVariable Long id, @RequestBody ClienteDto clienteDto){
 		
-		//ajustar este método e deixar certinho
+		
 		Cliente cliente = clienteService.converteDto(clienteDto);
 		clienteService.atualizarCliente(id, cliente);
 		return ResponseEntity.ok().build();

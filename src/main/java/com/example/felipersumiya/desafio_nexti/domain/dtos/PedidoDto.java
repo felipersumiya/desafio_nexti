@@ -7,6 +7,8 @@ import com.example.felipersumiya.desafio_nexti.domain.Cliente;
 import com.example.felipersumiya.desafio_nexti.domain.Pedido;
 import com.example.felipersumiya.desafio_nexti.domain.Produto;
 
+//Classe criada para representar os dados que serão recebidos e exibidos nas requisições, de acordo com a necessidade da aplicação.
+
 public class PedidoDto {
 	
 

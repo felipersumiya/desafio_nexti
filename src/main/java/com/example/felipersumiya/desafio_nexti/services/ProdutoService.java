@@ -48,12 +48,12 @@ public class ProdutoService {
 		}
 	}
 	
+
 	public Produto atualizarProduto(Long id, Produto produto) {
 		
 		
 		try {
 		
-			//rever nomes destes objetos.
 			Produto produtoSalvar = produtoRepository.getById(id);
 			atualizarDados(produtoSalvar, produto);
 			return produtoRepository.save(produtoSalvar); 
@@ -68,6 +68,7 @@ public class ProdutoService {
 		}
 	}
 	
+	//Salva os atributos de produto em produtoSalvar para atualizar no banco de dados.
 	private void atualizarDados(Produto produtoSalvar, Produto produto) {
 		
 		produtoSalvar.setNome(produto.getNome());
@@ -95,6 +96,7 @@ public class ProdutoService {
 		
 	}
 	
+	//Converte o produtoDto para o tipo Produto.
 	public Produto converteDto(ProdutoDto produtoDto) {
 		
 		 return new Produto(produtoDto.getId(), produtoDto.getNome(), produtoDto.getDescricao(), produtoDto.getPreco(), produtoDto.getQuantidade());

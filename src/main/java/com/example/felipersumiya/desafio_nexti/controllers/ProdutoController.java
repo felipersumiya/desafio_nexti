@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.felipersumiya.desafio_nexti.domain.Produto;
-import com.example.felipersumiya.desafio_nexti.domain.dtos.ClienteDto;
 import com.example.felipersumiya.desafio_nexti.domain.dtos.ProdutoDto;
 import com.example.felipersumiya.desafio_nexti.services.ProdutoService;
 
@@ -40,7 +39,7 @@ public class ProdutoController {
 			
 		}
 		
-		//Listar Produto por id.	
+		//Listar produto por id.	
 		@GetMapping (value = "/{id}")
 		public ResponseEntity<ProdutoDto> listarPorId(@PathVariable Long id){
 			
@@ -50,7 +49,7 @@ public class ProdutoController {
 			return ResponseEntity.ok().body(produtoDto);
 		}
 		
-		//Incluir Produtos.
+		//Incluir produto.
 		@PostMapping
 		public ResponseEntity<Void> inserirProduto (@RequestBody ProdutoDto produtoDto){
 			
@@ -62,19 +61,18 @@ public class ProdutoController {
 			
 		}
 		
-		//Atualizar Produto
+		//Atualizar produto.
 		@PutMapping (value = "/{id}")
 		public ResponseEntity<Void> atualizarProduto(@PathVariable Long id, @RequestBody ProdutoDto produtoDto){
-			
-			//ajustar este método e deixar certinho
-			
+				
 			Produto produto = produtoService.converteDto(produtoDto);
 			produtoService.atualizarProduto(id, produto);
 			return ResponseEntity.ok().build();
+			
 		}		
 		
 
-		//Excluir Produto
+		//Excluir produto
 		@DeleteMapping (value = "/{id}")
 		public ResponseEntity<Void> excluirProduto(@PathVariable Long id){
 			

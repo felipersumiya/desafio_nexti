@@ -16,7 +16,7 @@ import com.example.felipersumiya.desafio_nexti.services.exceptions.ResourceNotFo
 @ControllerAdvice
 public class ResourceExceptionHandler {
 
-	
+	//Redireciona para a exceção de recursos não encontrados.
 	@ExceptionHandler (ResourceNotFoundException.class)
 	public ResponseEntity<StandardError> resourceNotFound(ResourceNotFoundException e, HttpServletRequest request){
 		
@@ -29,6 +29,7 @@ public class ResourceExceptionHandler {
 		
 	}
 	
+	//Redireciona para as exceções que podem ocorrer no banco de dados.
 	@ExceptionHandler (DatabaseException.class)
 	public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest request){
 		

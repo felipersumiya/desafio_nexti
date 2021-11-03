@@ -40,7 +40,7 @@ public class PedidoController {
 	@Autowired
 	private ProdutoService produtoService;
 	
-			// Listar pedidos.
+			//Listar pedidos.
 			@GetMapping
 			public ResponseEntity<List<PedidoDto>> listarpedidos(){
 				
@@ -63,7 +63,7 @@ public class PedidoController {
 				return ResponseEntity.ok().body(pedidoDto);
 			}
 			
-			//Incluir pedidos.
+			//Incluir pedido.
 			@PostMapping
 			public ResponseEntity<Void> inserirpedido (@RequestBody PedidoDto pedidoDto){
 				
@@ -79,8 +79,7 @@ public class PedidoController {
 			@PutMapping (value = "/{id}")
 			public ResponseEntity<Void> atualizarpedido(@PathVariable Long id, @RequestBody PedidoDto pedidoDto){
 				
-				//ajustar este método e deixar certinho
-				
+			
 				Pedido pedido = pedidoService.converteDto(pedidoDto);
 				pedidoService.atualizarPedido(id, pedido);
 				return ResponseEntity.ok().build();
@@ -97,10 +96,9 @@ public class PedidoController {
 				return ResponseEntity.noContent().build();
 			}
 			
-			/* Gerenciamento de Clientes em Pedidos**********************************************/
+			/***************Gerenciamento de Clientes em Pedidos**********************************************/
 			
-			//Vincular Cliente ao Pedido
-			
+			//Vincular cliente ao pedido
 			@PutMapping ("/clienteI/{id}")
 			public ResponseEntity<Void> insereClientePedido (@PathVariable Long id, @RequestBody ClienteDto clienteDto){
 				
@@ -112,7 +110,7 @@ public class PedidoController {
 
 			}
 			
-			//Remove Cliente do Pedido
+			//Remove cliente do pedido
 			@PutMapping ("/clienteR/{id}")
 			public ResponseEntity<Void> removeClientePedido (@PathVariable Long id, @RequestBody ClienteDto clienteDto){
 				
@@ -124,8 +122,10 @@ public class PedidoController {
 			}
 			
 			
-			/* Gerenciamento de Produtos em Pedidos**********************************************/
+			/*************Gerenciamento de Produtos em Pedidos**********************************************/
 			
+			
+			//Insere produto em pedido.
 			@PutMapping ("/produtoI/{id}")
 			public ResponseEntity<Void> insereProdutoPedido (@PathVariable Long id, @RequestBody ProdutoDto produtoDto){
 				
@@ -137,6 +137,7 @@ public class PedidoController {
 
 			}
 			
+			//Remove produto de pedido.
 			@PutMapping ("/produtoR/{id}")
 			public ResponseEntity<Void> removeProdutoPedido (@PathVariable Long id, @RequestBody ProdutoDto produtoDto){
 				

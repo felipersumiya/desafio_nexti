@@ -8,7 +8,6 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
 import com.example.felipersumiya.desafio_nexti.domain.Cliente;
@@ -56,8 +55,7 @@ public class ClienteService{
 	public Cliente atualizarCliente(Long id, Cliente cliente) {
 		
 		try {
-			
-		//rever nomes destes objetos.
+		
 		Cliente clienteSalvar = clienteRepository.getById(id);
 		atualizarDaddos(clienteSalvar, cliente);
 		return clienteRepository.save(clienteSalvar); 
@@ -73,6 +71,8 @@ public class ClienteService{
 		}
 		
 	}
+	
+	//Atualiza os dados em clienteSalvar com os dados de cliente.
 	
 	private void atualizarDaddos(Cliente clienteSalvar, Cliente cliente) {
 		
@@ -101,6 +101,7 @@ public class ClienteService{
 		
 	}
 	
+	//Converte o clienteDto para o tipo Cliente.
 	public Cliente converteDto (ClienteDto clienteDto) {
 		
 		 return new Cliente(clienteDto.getId(), clienteDto.getNome(),clienteDto.getCpf(), clienteDto.getDataDeNascimento());

@@ -84,7 +84,6 @@ public class PedidoService {
 	}
 	
 	//Atualiza os dados em pedidoSalvar com os dados de pedido.
-	
 	private void atualizarDados(Pedido pedidoSalvar, Pedido pedido) {
 		
 		pedidoSalvar.setCliente(pedido.getCliente());
@@ -143,7 +142,7 @@ public class PedidoService {
 		
 	}
 	
-	//Insere cliente em Pedido - teste que está na nova branch
+	//Insere cliente em Pedido.
 	public void inserirClientePedido(Long id, Cliente cliente) {
 		
 		try {
@@ -151,7 +150,6 @@ public class PedidoService {
 				Cliente clienteBd = clienteRepository.getById(cliente.getId());
 		
 				//Salvar cliente em pedido
-		
 				if(pedidoBd.getCliente() == null) {
 			
 					//Adiciona os atributos nos objetos
@@ -196,7 +194,7 @@ public class PedidoService {
 				if(pedidoBd.getCliente().getId() == clienteBd.getId()) {
 			
 					pedidoBd.setCliente(null);//remove cliente do pedido.
-					clienteBd.getPedidos().remove(pedidoBd);//remove o Pedido da lista de Clientes
+					clienteBd.getPedidos().remove(pedidoBd);//remove o pedido da lista de clientes.
 					
 					//Atualiza pedido e cliente no banco de dados
 					pedidoRepository.save(pedidoBd);
@@ -227,6 +225,7 @@ public class PedidoService {
 		}
 		
 	}
+	
 	//Insere o produto em Pedido.
 	public void insereProdutoPedido(Long id, Produto produto) {
 		
@@ -270,7 +269,7 @@ public class PedidoService {
 				
 	}
 	
-	//Remove o produto do Pedido.
+	//Remove o produto do pedido.
 	public void removeProdutoPedido(Long id, Produto produto) {
 		
 		try {
